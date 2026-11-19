@@ -1,0 +1,168 @@
+{
+  "bar": {
+    "autohide": false,
+    "autohideTimeout": 1000,
+    "height": 40,
+    "modules": {
+      "center": [
+        "time"
+      ],
+      "left": [
+        "workspaces"
+      ],
+      "right": [
+        "tray",
+        [
+          "kb",
+          "wifi",
+          "bt",
+          "vol",
+          "bat"
+        ]
+      ]
+    },
+    "opacity": 100,
+    "position": "top",
+    "style": "solid",
+    "time": {
+      "format": "HH:mm:ss"
+    },
+    "width": 40,
+    "workspaceCount": 10
+  },
+  "display": {
+    "monitors": {
+      "eDP-1": {
+        "enabled": false,
+        "scale": 1
+      },
+      "DP-2": {
+        "enabled": false
+      },
+      "DP-3": {
+        "enabled": false
+      },
+      "DP-1": {
+        "enabled": false
+      }
+    }
+  },
+  "dock": {
+    "apps": [
+      {
+        "comment": "Fast, feature-rich, GPU based terminal",
+        "desktop_id": "kitty",
+        "icon": "kitty",
+        "name": "Kitty"
+      },
+      {
+        "comment": "Access and organize files",
+        "desktop_id": "ski",
+        "icon": "ski",
+        "name": "Files"
+      }
+    ],
+    "autohide": false,
+    "autohideTimeout": 1000,
+    "background": true,
+    "cascadeScale": false,
+    "editing": false,
+    "elementSize": 44,
+    "enableScrolling": false,
+    "enabled": true,
+    "exclusive": false,
+    "floating": false,
+    "focusRunning": true,
+    "hoverScale": 120,
+    "maxElements": 7,
+    "maxVisibleElements": 7,
+    "onTop": true,
+    "overrideBoundsCorrection": false,
+    "position": "bottom",
+    "runningScope": "auto",
+    "scrollingElements": 7,
+    "showRunningApps": false,
+    "showRunningIndicators": true,
+    "smartAutohide": true,
+    "visibleElements": 7
+  },
+  "general": {
+    "avatarPath": "",
+    "language": "en",
+    "location": {},
+    "muteSfx": false,
+    "weatherInterval": 30,
+    "weatherUnit": "imperial"
+  },
+  "idle": {
+    "actions": {
+      "dim": {
+        "command": "",
+        "enabled": true,
+        "id": "dim",
+        "isCustom": false,
+        "mprisInhibit": true,
+        "respectInhibitors": true,
+        "resumeCommand": "",
+        "timeout": 150
+      },
+      "dpms": {
+        "command": "",
+        "enabled": true,
+        "id": "dpms",
+        "isCustom": false,
+        "mprisInhibit": true,
+        "respectInhibitors": true,
+        "resumeCommand": "",
+        "timeout": 450
+      },
+      "lock": {
+        "command": "",
+        "enabled": true,
+        "id": "lock",
+        "isCustom": false,
+        "mprisInhibit": true,
+        "respectInhibitors": true,
+        "resumeCommand": "",
+        "timeout": 300
+      },
+      "suspend": {
+        "command": "",
+        "enabled": true,
+        "id": "suspend",
+        "isCustom": false,
+        "mprisInhibit": true,
+        "respectInhibitors": true,
+        "resumeCommand": "",
+        "timeout": 600
+      }
+    },
+    "enabled": true
+  },
+  "inputs": {},
+  "launcher": {},
+  "notifications": {
+    "dnd": false,
+    "position": "top right",
+    "sound": true,
+    "soundFile": ""
+  },
+  "osd": {},
+  "syspanel": {
+    "clipExpandProgress": 0,
+    "clipExpanded": false,
+    "clipState": 1
+  },
+  "theme": {
+    "activePreset": "Matugen",
+    "borderRadius": 10,
+    "colors": {},
+    "fontFamily": "Adwaita Mono",
+    "matugen": true,
+    "blurBackground": true,
+    "elementOpacity": 61
+  },
+  "wallpaperDir": "/home/daniel/Pictures/Wallpapers",
+  "widgets": {}
+}
+

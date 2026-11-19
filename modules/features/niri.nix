@@ -5,10 +5,10 @@
 }: {
   flake.nixosModules.niri = { pkgs, ... }: {
     programs.niri = {
-     enable = true;
-     package = self.packages.${pkgs.stdenv.hostPlatform.system}.niri;
+      enable = true;
+      package = self.packages.${pkgs.stdenv.hostPlatform.system}.niri;
+    };
   };
-};  
 
   flake.wrappersModules.niri = {
     config,
@@ -31,102 +31,125 @@
   in {
     options.terminal = lib.mkOption {
       type = lib.types.str;
-      default = "kitty";
+      default = "ghostty";
     };
 
     config."config.kdl".content = lib.mkForce ''
       prefer-no-csd
 
+      output "DP-1" {
+        transform "270"
+      }
+
       input {
-          focus-follows-mouse
-          keyboard {
-              xkb {
-                  layout "us"
-                  options "caps:escape"
-              }
-              repeat-rate 40
-              repeat-delay 250
+        focus-follows-mouse
+        keyboard {
+          xkb {
+            layout "us"
+            options "caps:escape"
           }
-          touchpad {
-              tap
-              natural-scroll
-          }
-          mouse {
-              accel-profile "flat"
-          }
+          repeat-rate 40
+          repeat-delay 250
+        }
+        touchpad {
+          tap
+          natural-scroll
+        }
+        mouse {
+          accel-profile "flat"
+        }
+      }
+
+      window-rule {
+        match app-id="com.mitchellh.ghostty"
+        geometry-corner-radius 14
+        clip-to-geometry true
+      }
+      window-rule {
+        match app-id="dev.zed.Zed"
+        draw-border-with-background false
+      }
+      window-rule {
+        match app-id="code"
+        draw-border-with-background false
       }
 
       layout {
-          gaps 5
+        gaps 5
       }
 
       xwayland-satellite {
-          path "${lib.getExe config.pkgs.xwayland-satellite}"
+        path "${lib.getExe config.pkgs.xwayland-satellite}"
       }
 
       spawn-at-startup "bash" "-c" "${wlPaste} --type text --watch ${cliphist} store"
       spawn-at-startup "bash" "-c" "${wlPaste} --type image --watch ${cliphist} store"
+      spawn-at-startup "sh" "-c" "systemctl --user start serpantinum-defaults.service; exec serpantinumd start"
 
       binds {
-          Mod+Return { spawn "${config.terminal}"; }
-          Mod+Shift+E { quit; }
+        Mod+Return { spawn "${config.terminal}"; }
+        Mod+Shift+Insert { spawn "ghostty" "-e" "nh" "os" "switch" "/etc/nixos/MyNixOs#workstation"; }
 
-          Mod+Q { close-window; }
-          Mod+F { maximize-column; }
-          Mod+G { fullscreen-window; }
-          Mod+Shift+F { toggle-window-floating; }
-          Mod+Shift+C { center-column; }
+        Mod+Shift+E { quit; }
 
-          Mod+Left { focus-column-left; }
-          Mod+Right { focus-column-right; }
-          Mod+Up { focus-window-up; }
-          Mod+Down { focus-window-down; }
+        Mod+Q { close-window; }
+        Mod+F { maximize-column; }
+        Mod+G { fullscreen-window; }
+        Mod+Shift+F { toggle-window-floating; }
+        Mod+Shift+C { center-column; }
 
-          Mod+Shift+Left { move-column-left; }
-          Mod+Shift+Right { move-column-right; }
-          Mod+Shift+Up { move-window-up; }
-          Mod+Shift+Down { move-window-down; }
+        Mod+Left { focus-column-left; }
+        Mod+Right { focus-column-right; }
+        Mod+Up { focus-window-up; }
+        Mod+Down { focus-window-down; }
 
-          Mod+Ctrl+H { set-column-width "-5%"; }
-          Mod+Ctrl+L { set-column-width "+5%"; }
-          Mod+Ctrl+J { set-window-height "-5%"; }
-          Mod+Ctrl+K { set-window-height "+5%"; }
+        Mod+Shift+Left { move-column-left; }
+        Mod+Shift+Right { move-column-right; }
+        Mod+Shift+Up { move-window-up; }
+        Mod+Shift+Down { move-window-down; }
 
-          Mod+WheelScrollDown { focus-column-left; }
-          Mod+WheelScrollUp { focus-column-right; }
-          Mod+Ctrl+WheelScrollDown { focus-workspace-down; }
-          Mod+Ctrl+WheelScrollUp { focus-workspace-up; }
+        Mod+Ctrl+H { set-column-width "-5%"; }
+        Mod+Ctrl+L { set-column-width "+5%"; }
+        Mod+Ctrl+J { set-window-height "-5%"; }
+        Mod+Ctrl+K { set-window-height "+5%"; }
 
-          Mod+D { spawn "serpantinum" "msg" "toggle" "launcher"; }
-          Mod+B { spawn "serpantinum" "msg" "toggle" "system"; }
-          Mod+C { spawn "serpantinum" "msg" "toggle" "clipboard"; }
-          Mod+M { spawn "serpantinum" "msg" "toggle" "music"; }
-          Mod+W { spawn "serpantinum" "msg" "toggle" "wallpaper"; }
-          Mod+S { spawn "serpantinum" "msg" "toggle" "calendar"; }
-          Mod+N { spawn "serpantinum" "msg" "toggle" "network"; }
-          Mod+V { spawn "serpantinum" "msg" "toggle" "volume"; }
-          Mod+H { spawn "serpantinum" "msg" "toggle" "settings"; }
+        Mod+WheelScrollDown { focus-column-left; }
+        Mod+WheelScrollUp { focus-column-right; }
+        Mod+Ctrl+WheelScrollDown { focus-workspace-down; }
+        Mod+Ctrl+WheelScrollUp { focus-workspace-up; }
 
-          Mod+L { spawn "serpantinum" "lock"; }
-          Mod+R { spawn "serpantinum" "reload"; }
-          Mod+A { spawn "serpantinum" "msg" "bar" "autohide"; }
-          Print { spawn "serpantinum" "screenshot"; }
-          Shift+Print { spawn "serpantinum" "screenshot" "--edit"; }
-          Ctrl+Print { spawn "serpantinum" "screenshot" "--full"; }
+        Mod+D { spawn "serpantinum" "msg" "toggle" "launcher"; }
+        Mod+B { spawn "serpantinum" "msg" "toggle" "system"; }
+        Mod+C { spawn "serpantinum" "msg" "toggle" "clipboard"; }
+        Mod+M { spawn "serpantinum" "msg" "toggle" "music"; }
+        Mod+W { spawn "serpantinum" "msg" "toggle" "wallpaper"; }
+        Mod+S { spawn "serpantinum" "msg" "toggle" "calendar"; }
+        Mod+N { spawn "serpantinum" "msg" "toggle" "network"; }
+        Mod+V { spawn "serpantinum" "msg" "toggle" "volume"; }
+        Mod+H { spawn "serpantinum" "msg" "toggle" "settings"; }
 
-          XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "-l" "1.4" "@DEFAULT_AUDIO_SINK@" "5%+"; }
-          XF86AudioLowerVolume { spawn "wpctl" "set-volume" "-l" "1.4" "@DEFAULT_AUDIO_SINK@" "5%-"; }
-          XF86AudioMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+        Mod+L { spawn "serpantinum" "lock"; }
+        Mod+R { spawn "serpantinum" "reload"; }
+        Mod+A { spawn "serpantinum" "msg" "bar" "autohide"; }
+        Print { spawn "serpantinum" "screenshot"; }
+        Shift+Print { spawn "serpantinum" "screenshot" "--edit"; }
+        Ctrl+Print { spawn "serpantinum" "screenshot" "--full"; }
 
-          ${workspaceBinds}
+        XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "-l" "1.4" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+        XF86AudioLowerVolume { spawn "wpctl" "set-volume" "-l" "1.4" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+        XF86AudioMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+
+        Mod+SHIFT+N { spawn "sh" "-c" "$HOME/.local/share/vscode-vibrancy/current/bin/code /etc/nixos"; }
+
+        ${workspaceBinds}
       }
     '';
   };
 
-  perSystem = {pkgs, ...}: {
+  perSystem = { pkgs, ... }: {
     packages.niri = inputs.wrapper-modules.wrappers.niri.wrap {
       inherit pkgs;
-      imports = [self.wrappersModules.niri];
+      imports = [ self.wrappersModules.niri ];
     };
   };
 }

@@ -5,7 +5,7 @@
 	{
 	  imports = [
 	      self.nixosModules.home-pcHardware
-              self.nixosModules.niri	   
+        self.nixosModules.niri	   
 	      self.nixosModules.serpantinum  
 ];
 
